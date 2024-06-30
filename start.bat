@@ -4,19 +4,18 @@ title Harmoni Bot Startup
 echo Starting Harmoni Bot...
 echo -----------------------
 
-REM Prompt for Discord bot token and client ID
+REM
 set /p token="Enter your Discord bot token: "
 set /p clientId="Enter your Discord client ID: "
 
-REM Write to settings.json
+REM
 (
 echo {
-echo     "prefix": "!",
-echo     "harmoni":
-echo     {
-echo         "TOKEN": "%token%",
-echo         "ID": "%clientId%"
-echo     }
+echo   "prefix": "!",
+echo   "harmoni": {
+echo     "TOKEN": "%token%",
+echo     "ID": "%clientId%"
+echo   }
 echo }
 ) > settings.json
 
@@ -24,38 +23,25 @@ echo.
 echo settings.json created with the provided token and client ID.
 echo.
 
-REM Install npm packages
-echo Installing npm packages...
-npm install
-IF %ERRORLEVEL% NEQ 0 (
-    echo.
-    echo [ERROR] Failed to install npm packages.
-    echo.
-    goto end
+REM
+echo Running Harmoni Bot in the foreground...
+node index.js
+
+REM
+IF %ERRORLEVEL% EQU 0 (
+    echo Harmoni Bot started successfully in the foreground!
 )
 
-REM Pause to see if npm install succeeded
-PAUSE
-
-REM Run the bot
-echo Running Harmoni Bot...
-node .
-IF %ERRORLEVEL% NEQ 0 (
-    echo.
-    echo [ERROR] Harmoni Bot failed to start.
-    echo.
-    goto end
-) ELSE (
-    echo.
-    echo Harmoni Bot started successfully!
-    echo.
-)
-
-REM Pause to see if the bot ran successfully
-PAUSE
+goto :eof
 
 :end
-REM Wait for user input before closing
+REM
 echo.
-echo Press any key to continue...
-PAUSE >nul
+echo [ERROR] An error occurred during startup.
+echo.
+
+:eof
+REM
+echo.
+echo Press any key to close the window...
+pause >nul
