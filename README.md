@@ -1,6 +1,6 @@
 # Harmoni Discord Bot
 
-Harmoni is a Discord bot designed to automate moderation tasks and provide various functionalities for managing a Discord server efficiently.
+Harmoni is used to get an automod badge for the Discord bot.
 
 ## Prerequisites
 
